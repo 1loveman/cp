@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 	//逻辑运算符
 	// 逻辑运算符----- ! && ||
-	//c++中非零为真
+	//c++中 非零为真
 
 	//  ! ----取反
 	cout << (0) << endl;
