@@ -185,6 +185,7 @@ void ch(struct list* p) {
 //清空通讯录
 void delall(struct list* p) {
 	p->size = 0;
+	cout << "清空成功" << endl;
 }
 
 int main() {
