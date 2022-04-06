@@ -6,8 +6,8 @@
 
 
 int main() {
-	Manager a(01, "张三", 01);
-	a.Showinfo();
+	Worker* worker=new Manager(01, "张三", 01);
+	worker->Showinfo();
 
 	while (1) {
 		short FLAG;
@@ -16,9 +16,11 @@ int main() {
 		cout << "请选择:>";
 		cin >> FLAG;
 		switch (FLAG) {
-		case 0: f.Exit();
+		case 0://退出系统
+			f.Exit();
 			break;
-		case 1:
+		case 1://添加
+			f.Add();
 			break;
 		case 2:
 			break;
@@ -35,7 +37,6 @@ int main() {
 		default:system("cls");
 			break;
 		}
-		system("cls");
 	}
 
 
