@@ -4,6 +4,11 @@ using namespace std;
 #include<string>
 #include<cstdlib>
 #include"worker.h"
+#include"Employee.h"
+#include"Manager.h"
+#include"Boss.h"
+#include"fstream"
+#define FILENAME "list.txt"
 
 class func {
 public:
@@ -15,6 +20,9 @@ public:
 
 	//添加成员
 	void Add();
+
+	//保存文件
+	void Save();
 
 	//退出程序
 	void Exit();

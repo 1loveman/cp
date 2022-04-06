@@ -6,9 +6,6 @@
 
 
 int main() {
-	Worker* worker=new Manager(01, "ÕÅÈý", 01);
-	worker->Showinfo();
-
 	while (1) {
 		short FLAG;
 		func f;
@@ -38,8 +35,6 @@ int main() {
 			break;
 		}
 	}
-
-
 	system("pause");
 	return 0;
 }

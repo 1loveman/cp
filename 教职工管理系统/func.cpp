@@ -1,7 +1,6 @@
 #include"func.h"
-#include"Employee.h"
-#include"Manager.h"
-#include"Boss.h"
+
+
 
 func::func(){
 
@@ -28,6 +27,19 @@ void func::Menu() {
 	cout << "*******************************" << endl;
 }
 
+//保存文件
+void func::Save() {
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out);
+	for (int i = 0; i < this->EmpNum;i++) {
+		ofs << EmpArr[i]->m_Id
+			<< EmpArr[i]->m_Name
+			<< EmpArr[i]->m_DeptId
+			<< endl;
+	}
+	ofs.close();
+}
+
 //添加成员
 void func::Add() {
 	int AddNum;
@@ -52,8 +64,14 @@ void func::Add() {
 			cout << "1---普通员工" << endl
 				<< "2---经理" << endl
 				<< "3---老板" << endl;
-			cout << "请选择编号:>";
-			cin >> Select;
+			do {
+				cout << "请选择编号:>";
+				cin >> Select;
+				if (Select < 1 || Select>3) {
+					cout << "输入有误" << endl;;
+				}
+			} while (Select < 1 || Select>3);
+			
 			Worker* worker = NULL;
 			switch (Select) {
 			case 1:
@@ -70,14 +88,12 @@ void func::Add() {
 			}
 			NewSpace[EmpNum + i] = worker;
 		}
-
-
-
 		if (EmpArr) {
 			delete[] EmpArr;
 		}
 		this->EmpArr = NewSpace;
 		this->EmpNum = EmpNum + AddNum;
+		Save();
 
 		cout << "成功添加" << AddNum << "名新员工" << endl;
 	}
