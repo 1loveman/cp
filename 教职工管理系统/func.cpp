@@ -3,6 +3,34 @@
 
 
 func::func(){
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	if (!ifs.is_open()) {
+		cout << "文件不存在" << endl;
+		EmpNum = 0;
+		EmpArr = NULL;
+		m_isEmpty = true;
+	}
+	else {
+		char ch;
+		ifs >> ch;
+		if (ifs.eof()) {
+			cout << "文件为空" << endl;
+			EmpNum = 0;
+			EmpArr = NULL;
+			m_isEmpty = true;
+		}
+		else {
+			int num = GetEmpNum();
+			cout << "文件现有" << num << "名员工" << endl;
+			this->EmpNum = num;
+			this->EmpArr = new Worker * [this->EmpNum];
+			Init_EmpArr();
+			m_isEmpty = false;
+		}
+
+	}
+	ifs.close();
 
 }
 
@@ -32,8 +60,8 @@ void func::Save() {
 	ofstream ofs;
 	ofs.open(FILENAME, ios::out);
 	for (int i = 0; i < this->EmpNum;i++) {
-		ofs << EmpArr[i]->m_Id
-			<< EmpArr[i]->m_Name
+		ofs << EmpArr[i]->m_Id<<"\\"
+			<< EmpArr[i]->m_Name<<"\\ "
 			<< EmpArr[i]->m_DeptId
 			<< endl;
 	}
@@ -96,6 +124,7 @@ void func::Add() {
 		Save();
 
 		cout << "成功添加" << AddNum << "名新员工" << endl;
+		this->m_isEmpty = false;
 	}
 	else {
 		cout << "输入有误" << endl;
@@ -110,4 +139,44 @@ void func::Exit() {
 	cout << "退出成功，欢迎下次使用！" << endl;
 	system("pause");
 	exit(0);
+}
+
+//计算雇员数量。
+int func::GetEmpNum() {
+	int num = 0;
+	int id;
+	string name;
+	int did;
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	while (ifs >> id && ifs >> name && ifs >> did) {
+		num++;
+	}
+	ifs.close();
+	return num;
+}
+
+//初始化成员
+void func::Init_EmpArr() {
+	int id;
+	string name;
+	int did;
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	Worker* worker = NULL;
+	int index = 0;
+	while (ifs >> id && ifs >> name && ifs >> did) {//ofs>>遇到空格停止
+		if (did == 1) {
+			worker = new Employee(id, name, did);
+		}
+		else if (did == 2) {
+			worker = new Manager(id, name, did);
+		}
+		else {
+			worker = new Boss(id, name, did);
+		}
+		this->EmpArr[index] = worker;
+		index++;
+	}
+	ifs.close();
 }

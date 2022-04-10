@@ -152,6 +152,9 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="worker.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="list.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

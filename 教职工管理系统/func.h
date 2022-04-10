@@ -27,6 +27,12 @@ public:
 	//退出程序
 	void Exit();
 
+	//计算雇员数量
+	int GetEmpNum();
+
+	//初始化成员
+	void Init_EmpArr();
+
 	~func();
 
 	//成员数量
@@ -34,6 +40,9 @@ public:
 
 	//成员数组
 	Worker** EmpArr = NULL;
+
+	//文件判断标准
+	bool m_isEmpty;
 };
 
 
