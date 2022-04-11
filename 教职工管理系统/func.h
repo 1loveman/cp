@@ -21,6 +21,15 @@ public:
 	//添加成员
 	void Add();
 
+	//显示职工信息
+	void ShowMassage();
+
+	//删除职工
+	void Delete();
+
+	//修改职工信息
+	void Revise();
+
 	//保存文件
 	void Save();
 
@@ -33,6 +42,9 @@ public:
 	//初始化成员
 	void Init_EmpArr();
 
+	//职工编号是否存在
+	int IsExist(int id);
+
 	~func();
 
 	//成员数量
@@ -42,7 +54,7 @@ public:
 	Worker** EmpArr = NULL;
 
 	//文件判断标准
-	bool m_isEmpty;
+	bool m_isEmpty=true;
 };
 
 

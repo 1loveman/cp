@@ -19,11 +19,14 @@ int main() {
 		case 1://Ìí¼Ó
 			f.Add();
 			break;
-		case 2:
+		case 2://ÏÔÊ¾
+			f.ShowMassage();
 			break;
-		case 3:
+		case 3://É¾³ı
+			f.Delete();
 			break;
-		case 4:
+		case 4://ĞŞ¸Ä
+			f.Revise();
 			break;
 		case 5:
 			break;

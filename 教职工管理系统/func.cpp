@@ -60,8 +60,8 @@ void func::Save() {
 	ofstream ofs;
 	ofs.open(FILENAME, ios::out);
 	for (int i = 0; i < this->EmpNum;i++) {
-		ofs << EmpArr[i]->m_Id<<"\\"
-			<< EmpArr[i]->m_Name<<"\\ "
+		ofs << EmpArr[i]->m_Id<<" "
+			<< EmpArr[i]->m_Name<<" "
 			<< EmpArr[i]->m_DeptId
 			<< endl;
 	}
@@ -106,10 +106,10 @@ void func::Add() {
 				worker = new Employee(id, name, Select);
 				break;
 			case 2:
-				worker = new Employee(id, name, Select);
+				worker = new Manager(id, name, Select);
 				break;
 			case 3:
-				worker = new Employee(id, name, Select);
+				worker = new Boss(id, name, Select);
 				break;
 			default:
 				break;
@@ -132,6 +132,102 @@ void func::Add() {
 	system("pause");
 	system("cls");
 	
+}
+
+//显示职工信息
+void func::ShowMassage() {
+	if (!m_isEmpty) {
+		for (int i = 0; i < EmpNum; i++) {
+			EmpArr[i]->Showinfo();
+		}
+	}
+	else {
+		cout << "职员不存在！" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+
+//删除职工
+void func::Delete() {
+	if (m_isEmpty) {
+		cout << "文件为空或者不存在！" << endl;
+	}
+	else {
+		int id;
+		int ret;
+		cout << "请输入需要删除的职工编号:>";
+		cin >> id;
+		ret = IsExist(id);
+		if (ret == -1) {
+			cout << "该职工不存在！" << endl;
+		}
+		else {
+			while (++ret < EmpNum) {
+				EmpArr[ret - 1] = EmpArr[ret];
+			}
+			EmpNum--;
+			Save();
+			cout << "删除成功！" << endl;
+		}
+	}
+	system("pause");
+	system("cls");
+}
+
+//修改职工信息
+void func::Revise() {
+	if (m_isEmpty) {
+		cout << "文件为空或者不存在！" << endl;
+	}
+	else {
+		cout << "请输入要修改职工的编号:>";
+		int id;
+		int ret;
+		cin >> id;
+		ret = IsExist(id);
+		if (ret != -1) {
+			string name;
+			int did;
+			cout << "请输入职工姓名:>";
+			cin >> name;
+			cout << "请输入职工岗位" << endl;
+			cout << "1---普通员工" << endl
+				<< "2---经理" << endl
+				<< "3---老板" << endl;
+			do {
+				cout << "请选择编号:>";
+				cin >> did;
+				if (did < 1 || did>3) {
+					cout << "输入有误" << endl;;
+				}
+			} while (did < 1 || did>3);
+			Worker* worker = NULL;
+			switch (did) {
+			case 1:
+				worker = new Employee(id, name, did);
+				break;
+			case 2:
+				worker = new Manager(id, name, did);
+			case 3:
+				worker = new Boss(id, name, did);
+			default:
+				break;
+			}
+			Worker* p = EmpArr[ret];
+			EmpArr[ret] = worker;
+			delete p;
+			Save();
+			cout << "修改成功！" << endl;
+
+		}
+		else {
+			cout << "该职工编号不存在！" << endl;
+		}
+
+	}
+	system("pause");
+	system("cls");
 }
 
 //退出程序
@@ -179,4 +275,14 @@ void func::Init_EmpArr() {
 		index++;
 	}
 	ifs.close();
+}
+
+//职工编号是否存在
+int func::IsExist(int id) {
+	for (int i = 0; i < EmpNum; i++) {
+		if (EmpArr[i]->m_Id == id) {
+			return i;
+		}
+	}
+	return -1;
 }
