@@ -30,6 +30,12 @@ public:
 	//修改职工信息
 	void Revise();
 
+	//查找指定员工
+	void find();
+
+	//排序
+	void sort();
+
 	//保存文件
 	void Save();
 

@@ -28,9 +28,11 @@ int main() {
 		case 4://ĞŞ¸Ä
 			f.Revise();
 			break;
-		case 5:
+		case 5://²éÕÒ
+			f.find();
 			break;
-		case 6:
+		case 6://ÅÅĞò
+			f.sort();
 			break;
 		case 7:
 			break;

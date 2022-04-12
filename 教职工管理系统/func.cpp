@@ -84,8 +84,15 @@ void func::Add() {
 			int id;
 			string name;
 			int Select;
-			cout << "请输入要添加的职工编号:>";
-			cin >> id;
+			int res;
+			do {
+				cout << "请输入要添加的职工编号:>";
+				cin >> id;
+				res=IsExist(id);
+				if(res!=-1){
+					cout << "输入有误，该职工编号已存在！" << endl;
+				}
+			} while (res!=-1);
 			cout << "请输入要添加职工的姓名:>";
 			cin >> name;
 			cout << "请选择要添加职工的岗位" << endl;
@@ -163,7 +170,7 @@ void func::Delete() {
 			cout << "该职工不存在！" << endl;
 		}
 		else {
-			while (++ret < EmpNum) {
+			while ((++ret) < EmpNum) {
 				EmpArr[ret - 1] = EmpArr[ret];
 			}
 			EmpNum--;
@@ -214,9 +221,10 @@ void func::Revise() {
 			default:
 				break;
 			}
-			Worker* p = EmpArr[ret];
+			delete EmpArr[ret];
+			/*Worker* p = EmpArr[ret];*/
 			EmpArr[ret] = worker;
-			delete p;
+			/*delete p;*/
 			Save();
 			cout << "修改成功！" << endl;
 
@@ -225,6 +233,99 @@ void func::Revise() {
 			cout << "该职工编号不存在！" << endl;
 		}
 
+	}
+	system("pause");
+	system("cls");
+}
+
+//查找指定员工
+void func::find() {
+	if (m_isEmpty) {
+		cout << "文件为空或者不存在！" << endl;
+	}
+	else {
+		cout << "查找方式如下" << endl
+			<< "0--按编号" << endl
+			<< "1--按姓名" << endl
+			<< "请选择:>";
+		int flag;
+		cin >> flag;
+		if (flag==1) {
+			cout << "请输入职工姓名:>";
+			int i;
+			string name;
+			cin >> name;
+			bool n = false;
+			for (i = 0; i < EmpNum; i++) {
+				if ((EmpArr[i]->m_Name) == name) {
+					EmpArr[i]->Showinfo();
+					n = true;
+				}
+			}
+			if (n==false) {
+				cout << "未找到该姓名职工！" << endl;
+			}
+		}
+		else if(flag==0){
+			cout << "请输入编号:>";
+			int id;
+			cin >> id;
+			int ret = IsExist(id);
+			if (ret == -1) {
+				cout << "输入的编号不存在！" << endl;
+			}
+			else {
+				cout << "查找成功！" << endl;
+				EmpArr[ret]->Showinfo();
+			}
+		}
+		else{
+			cout << endl << "输入选择有误！" << endl;
+		}
+	}
+	system("pause");
+	system("cls");
+}
+
+void func::sort() {
+	if (m_isEmpty) {
+		cout << "文件不存在或者为空" << endl;
+	}
+	else {
+		cout << "选择排序方式" << endl
+			<< "0--升序" << endl
+			<< "1--降序" << endl
+			<< "请选择:>";
+		int flag;
+		cin >> flag;
+		if (flag == 0) {
+			for (int i = 0; i < EmpNum - 1; i++) {
+				for (int j = 0; j < EmpNum - i - 1; j++) {
+					if (EmpArr[j]->m_Id > EmpArr[j + 1]->m_Id) {
+						Worker* p = EmpArr[j + 1];
+						EmpArr[j + 1] = EmpArr[j];
+						EmpArr[j] = p;
+					}
+				}
+			}
+			cout << "排序成功!" << endl;
+		}
+		else if (flag == 1) {
+			for (int i = 0; i < EmpNum - 1; i++) {
+				for (int j = 0; j < EmpNum - i - 1; j++) {
+					if (EmpArr[j]->m_Id < EmpArr[j + 1]->m_Id) {
+						Worker* p = EmpArr[j + 1];
+						EmpArr[j + 1] = EmpArr[j];
+						EmpArr[j] = p;
+					}
+				}
+			}
+			cout << "排序成功!" << endl;
+		}
+		else {
+			cout << "输入选项有误!" << endl;
+		}
+		Save();
 	}
 	system("pause");
 	system("cls");
@@ -286,3 +387,5 @@ int func::IsExist(int id) {
 	}
 	return -1;
 }
+
+
