@@ -39,6 +39,9 @@ public:
 	//保存文件
 	void Save();
 
+	//清空文件
+	void Clear();
+
 	//退出程序
 	void Exit();
 

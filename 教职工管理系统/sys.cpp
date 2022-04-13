@@ -34,7 +34,8 @@ int main() {
 		case 6://ÅÅÐò
 			f.sort();
 			break;
-		case 7:
+		case 7://Çå¿Õ
+			f.Clear();
 			break;
 		default:system("cls");
 			break;

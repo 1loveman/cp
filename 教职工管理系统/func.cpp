@@ -6,7 +6,7 @@ func::func(){
 	ifstream ifs;
 	ifs.open(FILENAME, ios::in);
 	if (!ifs.is_open()) {
-		cout << "文件不存在" << endl;
+		cout << "******  通讯录文件不存在 ******" << endl;
 		EmpNum = 0;
 		EmpArr = NULL;
 		m_isEmpty = true;
@@ -15,14 +15,14 @@ func::func(){
 		char ch;
 		ifs >> ch;
 		if (ifs.eof()) {
-			cout << "文件为空" << endl;
+			cout << "******   通讯录文件为空  ******" << endl;
 			EmpNum = 0;
 			EmpArr = NULL;
 			m_isEmpty = true;
 		}
 		else {
 			int num = GetEmpNum();
-			cout << "文件现有" << num << "名员工" << endl;
+			cout << "**** 通讯录文件现有" << num << "名员工 ****" << endl; 
 			this->EmpNum = num;
 			this->EmpArr = new Worker * [this->EmpNum];
 			Init_EmpArr();
@@ -31,11 +31,16 @@ func::func(){
 
 	}
 	ifs.close();
-
+	/*system("pause");
+	system("cls");*/
 }
 
 func::~func() {
 	if (EmpArr) {
+		for (int i = 0; i < EmpNum; i++) {
+			delete this->EmpArr[i];
+			this->EmpArr[i] = NULL;
+		}
 		delete[] EmpArr;
 		EmpArr = NULL;
 	}
@@ -44,6 +49,7 @@ func::~func() {
 //打印菜单
 void func::Menu() {
 	cout << "*******************************" << endl;
+	cout << "*****    通讯录管理系统   *****" << endl;
 	cout << "***** 0、退出当前管理系统 *****" << endl;
 	cout << "***** 1、添加职工         *****" << endl;
 	cout << "***** 2、显示全部员工信息 *****" << endl;
@@ -173,6 +179,8 @@ void func::Delete() {
 			while ((++ret) < EmpNum) {
 				EmpArr[ret - 1] = EmpArr[ret];
 			}
+			delete this->EmpArr[ret - 1];
+			this->EmpArr[ret - 1] = NULL;
 			EmpNum--;
 			Save();
 			cout << "删除成功！" << endl;
@@ -287,6 +295,7 @@ void func::find() {
 	system("cls");
 }
 
+//排序
 void func::sort() {
 	if (m_isEmpty) {
 		cout << "文件不存在或者为空" << endl;
@@ -327,6 +336,15 @@ void func::sort() {
 		}
 		Save();
 	}
+	system("pause");
+	system("cls");
+}
+
+//清空文件
+void func::Clear() {
+	EmpNum = 0;
+	Save();
+	cout << "清空成功!" << endl;
 	system("pause");
 	system("cls");
 }
